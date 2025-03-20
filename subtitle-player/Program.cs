@@ -19,12 +19,18 @@ namespace subtitle_player
 
         static private void test()
         {
-            SrtCtrl ctrl= new SrtCtrl();
-            ctrl.read("D:\\yoshi\\Videos\\ブラジルゴスペル\\ブログ用srt\\test.srt");
-            TimeSpan ts = new TimeSpan(0, 0, 20);
-            List<string> subtitles = ctrl.GetSubTitles(ts);
-            string s = String.Join("\r\n", subtitles);
-            Debug.WriteLine(s);
+            try
+            {
+                SrtCtrl ctrl = new SrtCtrl();
+                ctrl.read("D:\\yoshi\\Videos\\ブラジルゴスペル\\ブログ用srt\\test.srt");
+                TimeSpan ts = new TimeSpan(0, 0, 20);
+                List<string> subtitles = ctrl.GetSubTitles(ts);
+                string s = String.Join("\r\n", subtitles);
+                Debug.WriteLine(s);
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }
