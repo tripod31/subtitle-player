@@ -1,0 +1,33 @@
+﻿<Window x:Class="subtitle_player.Window2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:subtitle_player"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Title="設定" Height="283" Width="313">
+    <Grid  Margin="10,10,10,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Button x:Name="button1" Grid.Row="0" Content="字幕フォント" HorizontalAlignment="Left" Click="button1_Click" Height="26" Width="86"/>
+        <Button x:Name="button3" Grid.Row="1" Content="字幕背景色" HorizontalAlignment="Left" Click="button3_Click" Height="26" Width="86"/>
+        <Label  Grid.Row="2" Content="透明度" HorizontalAlignment="Left" Width="193" Height="32"/>
+        <Slider x:Name="slider_opacity" Grid.Row="3" HorizontalAlignment="Left" Width="170" Maximum="1" ValueChanged="slider_opacity_ValueChanged" Height="20"/>
+        <Label Grid.Row="4" Content="ウィンドウ幅" HorizontalAlignment="Left" Width="193" Height="32"/>
+        <Slider x:Name="slider_width" Grid.Row="5" HorizontalAlignment="Left" Width="170" 
+                ValueChanged="slider_width_ValueChanged" Height="20"/>
+        <Label Grid.Row="6" Content="ウィンドウ高さ" HorizontalAlignment="Left" Width="193" Height="32"/>
+        <Slider x:Name="slider_height" Grid.Row="7" HorizontalAlignment="Left" Width="170" 
+                ValueChanged="slider_height_ValueChanged" Height="20"/>
+    </Grid>
+</Window>

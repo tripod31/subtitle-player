@@ -1,0 +1,64 @@
+﻿<Window x:Name="main" x:Class="subtitle_player.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:subtitle_player"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="CanResize"
+        Title="subtitle-player" Height="200" Width="669" MinWidth="800" MinHeight="200" Closed="main_Closed">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- タイトルバー -->
+        <DockPanel Background="#444" Height="30" Grid.Row="0"
+               MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <TextBlock Text="subtitle-player"
+                DockPanel.Dock="Left"                       
+                Foreground="White"
+                VerticalAlignment="Center"
+                Margin="10,0,0,0"/>
+            <Button Content="×" Width="37" Height="30"
+                DockPanel.Dock="Right"
+                HorizontalAlignment="Right"
+                Click="CloseButton_Click" RenderTransformOrigin="11.178,0.533"/>
+        </DockPanel>
+
+        <!-- 歌詞表示エリア -->
+        <Label x:Name="text_lyric"
+            Grid.Row="1"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Background="#B2000000" 
+            Content="ここに歌詞が表示されます" Padding="10,10,10,10" />
+
+        <!-- コントロールパネル -->
+        <Grid Grid.Row="2" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="126"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="button1" Grid.Column="0" Content="読み込み" Width="86" Click="button1_Click"/>
+            <Button x:Name="button2" Grid.Column="1" Content="再生" Width="86" Click="button2_Click"/>
+            <Button x:Name="button3" Grid.Column="2" Content="停止" Width="86" Click="button3_Click"/>
+            <TextBlock x:Name="text_sec" Grid.Column="3" Text="再生秒" VerticalAlignment="Center"/>
+            <TextBlock x:Name="text_file" Grid.Column="4" 
+               Text="再生ファイル"
+               TextWrapping="Wrap"
+               VerticalAlignment="Center" />
+            <Button x:Name="button4" Grid.Column="5" Content="設定" Width="84" Click="button4_Click"/>
+        </Grid>
+    </Grid>
+</Window>
