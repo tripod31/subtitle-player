@@ -14,7 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
         <!-- タイトルバー -->
@@ -45,7 +45,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="126"/>
+                <ColumnDefinition Width="80"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
@@ -53,12 +53,9 @@
             <Button x:Name="button1" Grid.Column="0" Content="読み込み" Width="86" Click="button1_Click"/>
             <Button x:Name="button2" Grid.Column="1" Content="再生" Width="86" Click="button2_Click"/>
             <Button x:Name="button3" Grid.Column="2" Content="停止" Width="86" Click="button3_Click"/>
-            <TextBlock x:Name="text_sec" Grid.Column="3" Text="再生秒" VerticalAlignment="Center"/>
-            <TextBlock x:Name="text_file" Grid.Column="4" 
-               Text="再生ファイル"
-               TextWrapping="Wrap"
-               VerticalAlignment="Center" />
-            <Button x:Name="button4" Grid.Column="5" Content="設定" Width="84" Click="button4_Click"/>
+            <Label x:Name="text_sec" Grid.Column="3" Content="再生秒" HorizontalContentAlignment="Center" VerticalAlignment="Center" />
+            <Label x:Name="text_file" Grid.Column="4" Content="再生ファイル" VerticalAlignment="Center" />
+            <Button x:Name="button4" Grid.Column="5" Content="設定" Width="86" Click="button4_Click"/>
         </Grid>
     </Grid>
 </Window>

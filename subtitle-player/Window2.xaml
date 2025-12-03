@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:subtitle_player"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
-        Title="設定" Height="301" Width="313">
+        Title="設定" Height="329" Width="232">
     <Grid  Margin="20,10,10,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>

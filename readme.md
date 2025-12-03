@@ -16,7 +16,7 @@ Windowsが32bitならx86、64bitならx64をダウンロードします。
 
 ### subtitle-player.zipをダウンロードして解凍
 ダウンロード(Googleドライブ)  
-https://drive.google.com/file/d/1GpJok__G_RcFdVb51Bbxw8zsDLtImXSh/view?usp=drive_link
+https://drive.google.com/file/d/1Eu3GziqLCSURun2DFd07RDGm7nCbJqqK/view?usp=sharing
 
 ## 使い方
 1. 「読み込み」ボタンで字幕ファイルを読み込みます。
@@ -40,3 +40,4 @@ https://drive.google.com/file/d/1GpJok__G_RcFdVb51Bbxw8zsDLtImXSh/view?usp=drive
 字幕文字列1
 字幕文字列2
 ```
+![subtitle-player.png](https://tripod31.github.io/images/img/subtitle-player.png)

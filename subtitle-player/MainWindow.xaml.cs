@@ -118,7 +118,7 @@ namespace subtitle_player
             if (openFileDialog.ShowDialog() == true)
             {
                 string path = openFileDialog.FileName;
-                text_file.Text = System.IO.Path.GetFileName(path);
+                text_file.Content = System.IO.Path.GetFileName(path);
                 _ctrl.read(path);
                 if (_ctrl.errs.Count > 0)
                 {
@@ -147,7 +147,7 @@ namespace subtitle_player
               * 現在秒に合致する字幕を表示
               */
             TimeSpan ts = DateTime.Now - start_time;
-            text_sec.Text = $"{ts.Minutes:D2}:{ts.Seconds:D2}";
+            text_sec.Content = $"{ts.Minutes:D2}:{ts.Seconds:D2}";
             List<string> subtitles = _ctrl.GetSubTitles(ts);
             string s = String.Join("\r\n", subtitles);
             if (text_lyric.Content.ToString() != s)
@@ -155,7 +155,7 @@ namespace subtitle_player
             if (ts > _ctrl.last)
             {
                 timer.Stop();
-                text_sec.Text = "";
+                text_sec.Content = "";
             }
         }
 
@@ -165,7 +165,7 @@ namespace subtitle_player
             // 停止ボタン
             timer.Stop();
             text_lyric.Content = "";
-            text_sec.Text = "";
+            text_sec.Content = "";
         }
 
         private void button4_Click(object sender, RoutedEventArgs e)
