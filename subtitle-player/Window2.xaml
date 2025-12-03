@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:subtitle_player"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
-        Title="設定" Height="283" Width="313">
-    <Grid  Margin="10,10,10,0">
+        Title="設定" Height="301" Width="313">
+    <Grid  Margin="20,10,10,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
