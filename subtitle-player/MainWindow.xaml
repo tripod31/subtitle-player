@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <!-- タイトルバー -->
-        <DockPanel Background="#444" Height="30" Grid.Row="0"
+        <DockPanel Background="#444" Grid.Row="0"
                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
             <TextBlock Text="subtitle-player"
                 DockPanel.Dock="Left"                       
@@ -28,7 +28,7 @@
             <Button Content="×" Width="37" Height="30"
                 DockPanel.Dock="Right"
                 HorizontalAlignment="Right"
-                Click="CloseButton_Click" RenderTransformOrigin="11.178,0.533"/>
+                Click="CloseButton_Click" />
         </DockPanel>
 
         <!-- 歌詞表示エリア -->
@@ -40,7 +40,7 @@
             Content="ここに歌詞が表示されます" Padding="10,10,10,10" />
 
         <!-- コントロールパネル -->
-        <Grid Grid.Row="2" Background="White">
+        <Grid Grid.Row="2" Background="#dddddd">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
