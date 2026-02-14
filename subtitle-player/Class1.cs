@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows.Media;
 using System.IO;
 
 namespace subtitle_player
@@ -18,10 +17,18 @@ namespace subtitle_player
 
         public SrtData()
         {
+            index = 0;
+            start = new TimeSpan(0, 0, 0);
+            end   = new TimeSpan(0, 0, 0);
             this.subtitles = [];
         }
 
-        public SrtData(int index,int s_min,int s_sec,int e_min,int e_sec, List<String> subtitles)
+        public SrtData(int index ,
+            int s_min,
+            int s_sec,
+            int e_min,
+            int e_sec,
+            List<String> subtitles)
         {
             this.index = index;
             start  = new TimeSpan(0, s_min, s_sec);
@@ -36,6 +43,9 @@ namespace subtitle_player
         /*
          * SrtDataを操作する
          */
+
+        private int _index = 0; //字幕の通番
+
         private List<SrtData> _arr;
         public List<SrtData> arr
         {
@@ -53,35 +63,10 @@ namespace subtitle_player
             get { return _arr[_arr.Count - 1].end; }
         }   // 再生が終わる秒数
 
-        private SrtData _data = new SrtData();  //現在読み込んでいる１つのデータ
-        // SRTファイルから１セクション読み込み時に各項目を読み込んだかチェック用
-        private List<string> _flags= new List<string>();                    //読み込んだ項目名のリスト
-        private List<string> _items = ["index", "time_span", "subtitles"];   //SRTの１セクション中の項目名
 
         public SrtCtrl()
         {
             this._arr = [];
-        }
-
-        private void add_data()
-        {
-            /*
-             * SrtDataの配列に１つ追加
-             */
-            List<string>missing = _items.Except(this._flags).ToList();  // 読み込まれていない項目のリスト
-            if (missing.Count == 0)
-            {
-                // SrtDataの配列に追加
-                _arr.Add(_data);
-            }
-            else
-            {
-                //読み込む項目が欠けている場合
-                string msg = $"{_data.index}：以下の項目が欠けています："+ String.Join(",", missing.ToArray());
-                _errs.Add(msg);
-            }
-            _data = new SrtData();
-            _flags.Clear();
         }
 
 
@@ -93,48 +78,65 @@ namespace subtitle_player
             StreamReader sr = new StreamReader(path, Encoding.GetEncoding("UTF-8"));
             string data = sr.ReadToEnd();
             sr.Close();
-            string[] lines = data.Replace("\r\n", "\n").Split([ '\n', '\r' ]);
-            
+            string[] lines = data.Replace("\r\n", "\n").Split(['\n', '\r']);
+
             _errs.Clear();
-            _data = new SrtData();
-            int idx = 0;
+            _index = 0; 
+            List<string> buf = [];
             foreach (string line in lines)
             {
-                idx++;
-                if (line.Length == 0)
-                    // 空行はスキップ
-                    continue;
-
-                // 通番
-                Match match = Regex.Match(line, @"^(\d+)$");
-                if (match.Success) {
-                    if ( _flags.Contains("index")){
-                        add_data(); // 最初の通番行でなければ、データを１件追加
+                if (line.Length == 0) { 
+                    // 空行
+                    if (buf.Count > 0)
+                    {
+                        parse_block(buf);
+                        buf = [];
                     }
-
-                    _data.index = int.Parse(match.Value);
-                    _flags.Add("index");
-                    continue;
                 }
-
-                // 開始秒 --> 終了秒
-                match = Regex.Match(line, @"^(\d{2}):(\d{2}):(\d{2}),\d{3} --> (\d{2}):(\d{2}):(\d{2}),\d{3}$");
-                if (match.Success)
+                else
                 {
-                    _data.start = new TimeSpan(
-                        int.Parse(match.Groups[1].Value), int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value));
-                    _data.end   = new TimeSpan(
-                        int.Parse(match.Groups[4].Value), int.Parse(match.Groups[5].Value), int.Parse(match.Groups[6].Value));
-                    _flags.Add("time_span");
-                    continue;
+                    buf.Add(line);
                 }
 
-                // 字幕文字列
-                _data.subtitles.Add(line);
-                _flags.Add("subtitles");
             }
-            // 最後のデータを追加
-            add_data();
+        }
+
+        private void parse_block(List<string> lines) { 
+            // 通番行
+            SrtData data = new SrtData();
+
+            if (lines.Count >= 3) {
+                // 字幕文字列
+                data.subtitles = lines[2..];
+            }
+            else
+            {
+                _errs.Add($"字幕データに字幕がない: {lines[0]}");
+            }
+
+            Match match = Regex.Match(lines[0], @"^(\d+)$");
+            if (match.Success) {
+                data.index = int.Parse(match.Value);
+            }
+            else
+            {
+                _errs.Add($"字幕データの１行目が通番でない: {lines[0]}");
+            }
+
+            // 開始秒 --> 終了秒行
+            match = Regex.Match(lines[1], @"^(\d{2}):(\d{2}):(\d{2}),\d{3} --> (\d{2}):(\d{2}):(\d{2}),\d{3}$");
+            if (match.Success)
+            {
+                data.start = new TimeSpan(
+                    int.Parse(match.Groups[1].Value), int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value));
+                data.end   = new TimeSpan(
+                    int.Parse(match.Groups[4].Value), int.Parse(match.Groups[5].Value), int.Parse(match.Groups[6].Value));
+            }
+            else
+            {
+                _errs.Add($"字幕データの２行目が時間指定行でない: {lines[1]}");
+            }
+            _arr.Add(data);
         }
 
         public List<string> GetSubTitles(TimeSpan t)
@@ -143,15 +145,19 @@ namespace subtitle_player
              * 開始秒を指定する。合致する字幕を返す。
              */
             List<string> ret = [];
-
-            foreach (SrtData data in this._arr)
+            // 後ろから探す
+            // 字幕の終了秒数と次の字幕の開始秒数が同じ場合、次の字幕を適用するため
+            for (int i = _arr.Count - 1; i >= 0; i--)
             {
-                if (t>=data.start && t <= data.end - TimeSpan.FromSeconds(1))
+                var data = _arr[i];
+
+                if (t >= data.start && t <= data.end)
                 {
-                    ret =  data.subtitles;
+                    ret = data.subtitles;
                     break;
                 }
             }
+
             return ret;
         }
     }

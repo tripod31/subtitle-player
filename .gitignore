@@ -5,6 +5,7 @@
 
 #yoshi
 temp/
+test/
 *.zip
 make_zip.py
 
@@ -366,3 +367,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/make_zip.py
+/make-zip.py
